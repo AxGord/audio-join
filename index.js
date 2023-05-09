@@ -20,18 +20,26 @@ var firstFile = null;
 var secondFile = null;
 
 window.onload = () => {
+	const btn = document.getElementById("start");
+	const tooltip = document.getElementById("tooltip");
+	function updateBtn() {
+		btn.hidden = !firstFile || !secondFile;
+		tooltip.hidden = !btn.hidden;
+	}
+	updateBtn();
 	document.getElementById('firstFile').addEventListener('change', function() {
         const file = this.files[0];
 		firstFile = file && blob.createObjectURL(file);
+		updateBtn();
 	});
 	document.getElementById('secondFile').addEventListener('change', function() {
         const file = this.files[0];
 		secondFile = file && blob.createObjectURL(file);
+		updateBtn();
 	});
 	const mix = document.getElementById("mix");
 	const mixValue = document.getElementById("mixValue");
 	mix.onchange = () => mixValue.innerHTML = mix.value;
-	const btn = document.getElementById("start");
 	const result = document.getElementById("result");
 	btn.onclick = () => {
 		if (inProgress) return;
